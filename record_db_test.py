@@ -188,7 +188,7 @@ def print_artists_and_records():
 # artist_id = 114
 # print_Biography(artist_id)
 
-# ---- Artist calls ----
+# ---- Record calls ----
 
 # print_artists_and_records()
 
