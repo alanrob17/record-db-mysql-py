@@ -8,13 +8,11 @@ This an example of the ``artists`` JSON.
 
  ```json
     {
-     "_id": "6324401d9926786e6c05479e",
      "artistid": 114,
      "firstname": "Bob",
      "lastname": "Dylan",
      "name": "Bob Dylan",
-     "biography": "<p>Bob Dylan's influence...</p>",
-     "__v": 0
+     "biography": "<p>Bob Dylan's influence...</p>"
     }
  ```
 
@@ -22,7 +20,6 @@ This is an example of the ``records`` JSON.
 
 ```json
  {
-  "artist": "6324401d9926786e6c05479e",
   "recordid": 1172,
   "artistid": 114,
   "name": "Blonde On Blonde",
