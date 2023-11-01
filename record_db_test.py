@@ -77,6 +77,37 @@ def print_artist(name):
         print(f"Artist '{artist_name}' not found in the 'Artist' table.")
 
 
+def create_artist():
+    firstname = "Charley"
+    lastname = "Robson"
+    name = ""
+    biography = "Charley is a Country & Western singer."
+    artist = (firstname, lastname, name, biography)
+
+    artist_id = a.create_artist(artist)
+
+    print(artist_id)
+
+
+def update_artist(artist_id):
+    artist = {
+        "FirstName": "Charley",
+        "LastName": "Robson",
+        "Name": "",
+        "Biography": "Charley is a Country & Western singer.",
+    }
+
+    result = a.update_artist(artist_id, artist)
+
+    return result
+
+
+def delete_artist(artist_id):
+    result = a.delete_artist(832)
+
+    print(result)
+
+
 ##---- Record ----
 
 
@@ -187,6 +218,21 @@ def print_artists_and_records():
 
 # artist_id = 114
 # print_Biography(artist_id)
+
+# create_artist()
+
+# artist_id = 832
+# result = update_artist(artist_id)
+# print(result)
+
+
+artist_id = 832
+delete_artist(838)
+
+# GetBiography(114);
+# ArtistHtml(114);
+# GetArtistId("Bob", "Dylan");
+
 
 # ---- Record calls ----
 
