@@ -78,13 +78,12 @@ def print_artist(name):
 
 
 def create_artist():
-    firstname = "Charley"
+    firstname = "James"
     lastname = "Robson"
-    name = ""
-    biography = "Charley is a Country & Western singer."
-    artist = (firstname, lastname, name, biography)
+    biography = "James is a heavy metal bass player."
+    artist = (firstname, lastname, biography)
 
-    artist_id = a.create_artist(artist)
+    artist_id = a.create_artist2(artist)
 
     print(artist_id)
 
@@ -126,7 +125,7 @@ def artist_html(artist_id):
     return html_code
 
 
-def get_artist_id(first_name, last_name):
+def GetArtistId(first_name, last_name):
     artist_id = a.get_artist_id_by_name2(first_name, last_name)
 
     if artist_id is not None:
@@ -240,9 +239,88 @@ def print_artists_and_records():
     artists_records = r.get_artists_and_records()
 
     for record in artists_records:
-        artist_id, artist, record_name, recorded, media = record
+        (artist_id, artist, record_name, recorded, media) = record
 
         print(f"{artist_id}: {artist} - {recorded} - {record_name} ({media})")
+
+
+def CreateRecord(artistId):
+    disc = (
+        artistId,
+        "Bongo Zongo",
+        "Rock",
+        1979,
+        "Bop Squat",
+        "USA",
+        "***",
+        1,
+        "CD",
+        "2023-09-27 12:00:00",
+        21.99,
+        "Pretty good,  even if I do say so myself!",
+    )
+
+    artistId = r.CreateRecord(disc)
+
+    if artistId:
+        print(f"Record with the Id: {artistId} created.")
+    else:
+        print("No record created!")
+
+
+def GetRecordById(recordId):
+    record = r.GetRecordById(recordId)
+
+    (
+        recordId,
+        artistId,
+        name,
+        field,
+        recorded,
+        label,
+        pressing,
+        rating,
+        discs,
+        media,
+        bought,
+        cost,
+        review,
+    ) = record
+
+    if record:
+        print(f"{recordId}, {artistId}, {name}, {recorded}, {media}, {bought}, {cost}")
+    else:
+        print("Record not found!")
+
+
+def UpdateRecord(recordId):
+    newRecord = (
+        827,
+        "Bango Wango",
+        "Jazz",
+        1990,
+        "Diddly Squat",
+        "AU",
+        "****",
+        2,
+        "CD",
+        "2023-10-27 12:00:00",
+        24.50,
+        "Pretty amazing, even if I do say so myself!",
+    )
+
+    result = r.UpdateRecord(recordId, newRecord)
+
+    if result:
+        print(result)
+    else:
+        print("Record not updated!")
+
+
+def DeleteRecord(recordId):
+    result = r.DeleteRecord(recordId)
+
+    print(result)
 
 
 # ---- Artist calls ----
@@ -275,9 +353,9 @@ def print_artists_and_records():
 # html = artist_html(artist_id)
 # print(html)
 
-first_name = "Bob"
-last_name = "Dylan"
-get_artist_id(first_name, last_name)
+# first_name = "Bob"
+# last_name = "Dylan"
+# GetArtistId(first_name, last_name)
 
 # get_artists_with_no_bio()
 
@@ -296,12 +374,18 @@ get_artist_id(first_name, last_name)
 # year = 1975
 # print_records_by_year(year)
 
+# artistId = 827
+# CreateRecord(artistId)
 
-# GetAllRecords();
-# CreateRecord(838);
-# GetRecordById(133);
-# UpdateRecord(5259);
-# DeleteRecord(5260);
+# recordId = 5255
+# GetRecordById(recordId)
+
+# recordId = 5256
+# UpdateRecord(recordId)
+
+recordId = 5253
+DeleteRecord(recordId)
+
 # GetRecordByName("Cutting Edge");
 # GetRecordsByArtistId(114);
 # GetArtistRecordsMultipleTables();

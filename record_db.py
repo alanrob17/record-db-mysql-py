@@ -121,3 +121,148 @@ def get_artist_ids_by_year(year):
     db.close()
 
     return artist_ids
+
+
+def CreateRecord(record):
+    record_id = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            (
+                artistId,
+                name,
+                field,
+                recorded,
+                label,
+                pressing,
+                rating,
+                discs,
+                media,
+                bought,
+                cost,
+                review,
+            ) = record
+            cursor.callproc(
+                "CreateRecord",
+                (
+                    artistId,
+                    name,
+                    field,
+                    recorded,
+                    label,
+                    pressing,
+                    rating,
+                    discs,
+                    media,
+                    bought,
+                    cost,
+                    review,
+                ),
+            )
+
+            for result in cursor.stored_results():
+                row = result.fetchone()
+                if row:
+                    artist_id = row[0]
+
+            db.commit()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return artist_id
+
+
+def GetRecordById(recordId):
+    record = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetRecordById", (recordId,))
+
+            for result in cursor.stored_results():
+                row = result.fetchone()
+                if row:
+                    record = row
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return record
+
+
+def UpdateRecord(recordId, updatedRecord):
+    (
+        artistId,
+        name,
+        field,
+        recorded,
+        label,
+        pressing,
+        rating,
+        discs,
+        media,
+        bought,
+        cost,
+        review,
+    ) = updatedRecord
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                "UpdateRecordById",
+                (
+                    recordId,
+                    artistId,
+                    name,
+                    field,
+                    recorded,
+                    label,
+                    pressing,
+                    rating,
+                    discs,
+                    media,
+                    bought,
+                    cost,
+                    review,
+                ),
+            )
+
+            result = f"{cursor.rowcount} record(s) affected"
+
+            db.commit()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return result
+
+
+def DeleteRecord(recordId):
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            # cursor.callproc("GetRecordById", (recordId,))
+            # existingRecord = cursor.fetchone()
+
+            # if existingRecord is None:
+            #     return "Record not found"
+
+            cursor.callproc("DeleteRecordById", (recordId,))
+            db.commit()
+
+            affected_rows = cursor.rowcount
+            if affected_rows > 0:
+                return f"{affected_rows} record(s) deleted"
+            else:
+                return "No records deleted"
+
+    except mysql.connector.Error as err:
+        return f"Error: {err}"

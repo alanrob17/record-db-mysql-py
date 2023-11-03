@@ -91,6 +91,30 @@ def create_artist(artist):
     return id
 
 
+def create_artist2(artist):
+    artist_id = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            firstname, lastname, biography = artist
+
+            cursor.callproc("CreateArtist", (firstname, lastname, biography))
+
+            for result in cursor.stored_results():
+                row = result.fetchone()
+                if row:
+                    artist_id = row[0]
+
+            db.commit()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return artist_id
+
+
 def update_artist(artist_id, new_artist):
     db = mysql.connector.connect(
         host="localhost", user=db_user, password=db_password, database=db_database
@@ -224,7 +248,6 @@ def get_artist_id_by_name2(first_name, last_name):
     artist_id = None
 
     try:
-        # Establish a database connection
         with mysql.connector.connect(
             host="localhost", user=db_user, password=db_password, database=db_database
         ) as db, db.cursor() as cursor:
