@@ -249,11 +249,15 @@ def DeleteRecord(recordId):
         with mysql.connector.connect(
             host="localhost", user=db_user, password=db_password, database=db_database
         ) as db, db.cursor() as cursor:
-            # cursor.callproc("GetRecordById", (recordId,))
-            # existingRecord = cursor.fetchone()
+            cursor.callproc("GetRecordById", (recordId,))
 
-            # if existingRecord is None:
-            #     return "Record not found"
+            for result in cursor.stored_results():
+                row = result.fetchone()
+                if row:
+                    record = row
+
+            if record is None:
+                return "Record not found"
 
             cursor.callproc("DeleteRecordById", (recordId,))
             db.commit()

@@ -377,13 +377,13 @@ def DeleteRecord(recordId):
 # artistId = 827
 # CreateRecord(artistId)
 
-# recordId = 5255
+# recordId = 5253
 # GetRecordById(recordId)
 
 # recordId = 5256
 # UpdateRecord(recordId)
 
-recordId = 5253
+recordId = 5251
 DeleteRecord(recordId)
 
 # GetRecordByName("Cutting Edge");
