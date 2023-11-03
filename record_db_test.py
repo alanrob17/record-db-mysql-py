@@ -328,7 +328,18 @@ def GetRecordByName(searchName):
     for record in records:
         (name, recorded, media, bought, cost) = record
 
-        print(f"{recorded} - {name} ({media} - Bought: {bought} - Cost ${cost})")
+        cost = round(cost, 2)
+
+        year = bought.strftime("%Y")
+        month = bought.strftime("%m")
+        day = bought.strftime("%d")
+
+        if year == "1900":
+            dateStamp = ""
+        else:
+            dateStamp = f" - Bought: {day}-{month}-{year}"
+
+        print(f"{recorded} - {name} ({media}){dateStamp} - Cost ${cost}")
 
 
 # ---- Artist calls ----
