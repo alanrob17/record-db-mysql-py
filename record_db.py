@@ -270,3 +270,21 @@ def DeleteRecord(recordId):
 
     except mysql.connector.Error as err:
         return f"Error: {err}"
+
+
+def GetRecordByName(searchName):
+    records = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetRecordByName", (searchName,))
+
+            for result in cursor.stored_results():
+                records = result.fetchall()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return records

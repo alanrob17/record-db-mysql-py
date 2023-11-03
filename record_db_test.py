@@ -323,6 +323,14 @@ def DeleteRecord(recordId):
     print(result)
 
 
+def GetRecordByName(searchName):
+    records = r.GetRecordByName(searchName)
+    for record in records:
+        (name, recorded, media, bought, cost) = record
+
+        print(f"{recorded} - {name} ({media} - Bought: {bought} - Cost ${cost})")
+
+
 # ---- Artist calls ----
 
 # name = "Bob Dylan"
@@ -383,10 +391,12 @@ def DeleteRecord(recordId):
 # recordId = 5256
 # UpdateRecord(recordId)
 
-recordId = 5251
-DeleteRecord(recordId)
+# recordId = 5251
+# DeleteRecord(recordId)
 
-# GetRecordByName("Cutting Edge");
+searchName = "blonde on blonde"
+GetRecordByName(searchName)
+
 # GetRecordsByArtistId(114);
 # GetArtistRecordsMultipleTables();
 # GetRecordsByArtistIdMultipleTables(114);
