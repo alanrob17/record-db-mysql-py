@@ -64,25 +64,41 @@ import record_test as rt
 # recordId = 5251
 # rt.DeleteRecord(recordId)
 
-searchName = "blonde on blonde"
-rt.GetRecordByName(searchName)
+# searchName = "Blonde On Blonde"
+# rt.GetRecordByName(searchName)
 
-# rt.GetRecordsByArtistId(114);
-# rt.GetArtistRecordsMultipleTables();
-# rt.GetRecordsByArtistIdMultipleTables(114);
-# rt.GetRecordsByArtistIdMultipleTablesSP(114);
-# rt.GetRecordsByYear(1974);
-# rt.GetTotalNumberOfCDs();
-# rt.GetTotalNumberOfDiscs();
-# rt.GetTotalNumberOfRecords();
-# rt.GetTotalNumberOfBlurays();
-# rt.GetRecordList();
-# rt.GetRecordListMultipleTables();
-# rt.CountDiscs(string.Empty);
-# rt.CountDiscs("DVD");
-# rt.CountDiscs("CD");
-# rt.CountDiscs("R");
-# rt.GetArtistRecordEntity(2196);
+# artistId = 114
+# rt.GetRecordsByArtistId(artistId)
+
+# sproc = "GetTotalCDCount"
+# total = rt.GetTotalNumberOfDiscs(sproc)
+# print(f"Total number of Records, CD's: {total}.")
+
+# sproc = "GetTotalNumberOfAllRecords"
+# total = rt.GetTotalNumberOfDiscs(sproc)
+# print(f"Total number of Records, CD's, DVD's and Blu-rays: {total}.")
+
+# sproc = "GetTotalNumberOfRecords"
+# total = rt.GetTotalNumberOfDiscs(sproc)
+# print(f"Total number of Vinyl Records: {total}.")
+
+# sproc = "GetTotalNumberOfAllBlurays"
+# total = rt.GetTotalNumberOfDiscs(sproc)
+# print(f"Total number of Blu-rays: {total}.")
+
+# rt.GetArtistRecordEntity(2196)
+
+"""
+    internal static void GetArtistRecordEntitySP(int recordId)
+    {
+        var r = _rd.GetArtistRecordEntitySP(recordId);
+        if (r.RecordId > 0)
+        {
+            Console.WriteLine($"{r.ArtistName}\n");
+            Console.WriteLine($"\t{r.Recorded} - {r.Name} ({r.Media}) - Rating: {r.Rating}");
+        }
+    }
+"""
 # rt.GetArtistNumberOfRecords(114);
 # rt.GetRecordDetails(2196);
 # rt.GetArtistNameFromRecord(2196);

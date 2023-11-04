@@ -197,3 +197,39 @@ def GetRecordByName(searchName):
             dateStamp = f" - Bought: {day}-{month}-{year}"
 
         print(f"{recorded} - {name} ({media}){dateStamp} - Cost ${cost}")
+
+
+def GetRecordsByArtistId(artistId):
+    records = r.GetRecordsByArtistId(artistId)
+
+    if records:
+        for record in records:
+            (
+                recordId,
+                artistId,
+                name,
+                field,
+                recorded,
+                label,
+                pressing,
+                rating,
+                discs,
+                media,
+                bought,
+                cost,
+                review,
+            ) = record
+
+            print(
+                f"{recordId}, {artistId}, {name}, {recorded}, {media}, {bought}, {cost}"
+            )
+    else:
+        print(f"Records not found for ArtistId: {artistId}!")
+
+
+def GetTotalNumberOfDiscs(sproc):
+    total = None
+
+    total = r.GetTotalNumberOfDiscs(sproc)
+
+    return total

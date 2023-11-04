@@ -76,6 +76,11 @@ END $
 
 DELIMITER ;
 
+SELECT RecordId, ArtistId, Name, Field, Recorded, Label, Pressing,
+            Rating, Discs, Media, Bought, Cost, Review
+	FROM Record WHERE ArtistId = 114
+    ORDER BY Recorded DESC;
+
 
 
 DELIMITER $
@@ -124,6 +129,66 @@ BEGIN
     SELECT recordId, artistId, name, field, recorded, label, pressing, rating, discs, media, bought, cost, review
     FROM Record
     WHERE recordId = _recordId;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetRecordsByArtistId(
+    IN _artistId INT
+)
+BEGIN
+SELECT RecordId, ArtistId, Name, Field, Recorded, Label, Pressing,
+       Rating, Discs, Media, Bought, Cost, Review
+	FROM Record WHERE ArtistId = _artistId
+    ORDER BY Recorded DESC;
+END $
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE GetTotalCDCount()
+BEGIN
+    DECLARE Total INT;
+
+    -- count CD's only.
+    SET Total = (SELECT SUM(Discs) FROM record WHERE media = 'CD');
+
+    -- count CD's in DVD and Blu-ray sets.
+    SET Total = Total + (SELECT SUM(Discs) FROM record
+                        WHERE (media = 'CD/DVD' OR media = 'CD/Blu-ray')
+                        AND Discs > 1);
+
+    -- Subtract one disc from each DVD or Blu-ray set.
+    SET Total = Total - (SELECT COUNT(*) FROM record
+                        WHERE (media = 'CD/DVD' OR media = 'CD/Blu-ray')
+                        AND Discs > 1);
+
+    SELECT Total;
+END $
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE GetTotalNumberOfAllRecords()
+BEGIN
+    -- count all CD's, Records, DVD & Blu-rays.
+    SELECT SUM(discs) FROM record;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetTotalNumberOfRecords()
+BEGIN
+    -- count all Vinyl Records.
+    SELECT SUM(discs) FROM Record WHERE Media = 'R';
 END $
 
 DELIMITER ;

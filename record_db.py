@@ -288,3 +288,65 @@ def GetRecordByName(searchName):
         print(f"Error: {err}")
 
     return records
+
+
+def GetRecordsByArtistId(artistId):
+    records = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetRecordsByArtistId", (artistId,))
+
+            for result in cursor.stored_results():
+                records = result.fetchall()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return records
+
+
+def GetTotalNumberOfCDs(sproc):
+    Total = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                sproc,
+            )
+
+            for result in cursor.stored_results():
+                result = result.fetchone()
+                if result:
+                    total = result[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return total
+
+
+def GetTotalNumberOfDiscs(sproc):
+    Total = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                sproc,
+            )
+
+            for result in cursor.stored_results():
+                result = result.fetchone()
+                if result:
+                    total = result[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return total
