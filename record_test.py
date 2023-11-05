@@ -3,6 +3,7 @@ import artist_test as at
 import artist_data as ad
 import record_db as r
 import record_data as rd
+import utilities as u
 
 
 def print_records_by_year(year):
@@ -86,8 +87,11 @@ def print_full_records():
             review,
         ) = record
 
+        dateStamp = u.dateString(bought)
+        dateStamp = f" - Bought: {dateStamp}" if dateStamp else ""
+
         print(
-            f"{record_id}: {artist_id}: - {name} - {field} - {recorded} - {label} - {pressing} - {rating} - {discs} - {media} - {bought} - {cost}."
+            f"{record_id}: {artist_id}: - {name} - {field} - {recorded} - {label} - {pressing} - {rating} - {discs} - {media} - {dateStamp} - ${u.roundOff(cost)}."
         )
 
 
@@ -144,8 +148,13 @@ def GetRecordById(recordId):
             review,
         ) = record
 
+    dateStamp = u.dateString(bought)
+    dateStamp = f" - Bought: {dateStamp}" if dateStamp else ""
+
     if record:
-        print(f"{recordId}, {artistId}, {name}, {recorded}, {media}, {bought}, {cost}")
+        print(
+            f"{recordId}, {artistId}, {name}, {recorded}, {media}, {dateStamp}, ${u.roundOff(cost)}"
+        )
     else:
         print("Record not found!")
 
@@ -185,18 +194,10 @@ def GetRecordByName(searchName):
     for record in records:
         (name, recorded, media, bought, cost) = record
 
-        cost = round(cost, 2)
+        dateStamp = u.dateString(bought)
+        dateStamp = f" - Bought: {dateStamp}" if dateStamp else ""
 
-        year = bought.strftime("%Y")
-        month = bought.strftime("%m")
-        day = bought.strftime("%d")
-
-        if year == "1900":
-            dateStamp = ""
-        else:
-            dateStamp = f" - Bought: {day}-{month}-{year}"
-
-        print(f"{recorded} - {name} ({media}){dateStamp} - Cost ${cost}")
+        print(f"{recorded} - {name} ({media}){dateStamp} - Cost ${u.roundOff(cost)}")
 
 
 def GetRecordsByArtistId(artistId):
@@ -220,8 +221,11 @@ def GetRecordsByArtistId(artistId):
                 review,
             ) = record
 
+            dateStamp = u.dateString(bought)
+            dateStamp = f" - Bought: {dateStamp}" if dateStamp else ""
+
             print(
-                f"{recordId}, {artistId}, {name}, {recorded}, {media}, {bought}, {cost}"
+                f"{recordId}, {artistId}, {name}, {recorded}, {media}, {dateStamp}, ${u.roundOff(cost)}"
             )
     else:
         print(f"Records not found for ArtistId: {artistId}!")
@@ -233,3 +237,177 @@ def GetTotalNumberOfDiscs(sproc):
     total = r.GetTotalNumberOfDiscs(sproc)
 
     return total
+
+
+def GetArtistRecordEntity(recordId):
+    record = r.GetArtistRecordEntity(recordId)
+
+    if record:
+        (
+            artistId,
+            firstName,
+            lastName,
+            artistName,
+            recordId,
+            name,
+            field,
+            recorded,
+            label,
+            pressing,
+            rating,
+            discs,
+            media,
+            bought,
+            cost,
+        ) = record
+
+        dateStamp = u.dateString(bought)
+        dateStamp = f" - Bought: {dateStamp}" if dateStamp else ""
+
+        print(
+            f"{recordId}, {artistId}, {artistName} - {name}, {recorded}, {media}, {dateStamp}, ${u.roundOff(cost)}"
+        )
+    else:
+        print(f"Records not found for ArtistId: {artistId}!")
+
+
+def GetArtistNumberOfRecords(artistId):
+    total = None
+    artist = a.get_artist_by_id(artistId)
+
+    if artist:
+        (artistId, firstName, lastName, name, biography) = artist
+
+        total = r.GetArtistNumberOfRecords(artistId)
+
+        if total:
+            print(f"{name} has {total} records.")
+        else:
+            print(f"{name} has no records.")
+    else:
+        print(f"{artistId} not found!")
+
+
+def GetRecordDetails(recordId):
+    record = r.GetSingleRecord(recordId)
+
+    if record:
+        (
+            recordId,
+            name,
+            recorded,
+            media,
+        ) = record
+
+        print(
+            f"Record Id: {recordId}, Name: {name}, Recorded: {recorded}, Media: {media}"
+        )
+    else:
+        print(f"Record not found for RecordId: {recordId}!")
+
+
+def GetArtistNameFromRecord(recordId: int):
+    name = None
+
+    name = r.GetArtistNameByRecordId(recordId)
+
+    if name:
+        print(f"Artist name: {name}.")
+    else:
+        print(f"Artist name not found for RecordId: {recordId}!")
+
+
+def GetDiscCountForYear(year: int):
+    total = None
+    total = r.GetDiscCountForYear(year)
+
+    if total:
+        print(f"Total number of discs for {year} is {total}.")
+    else:
+        print(f"{year} has no discs.")
+
+
+def GetBoughtDiscCountForYear(year: str):
+    total = None
+    total = r.GetBoughtDiscCountForYear(year)
+
+    if total:
+        print(f"Total number of discs bought in {year} is {total}.")
+    else:
+        print(f"No discs were bought in {year}.")
+
+
+def MissingRecordReviews():
+    records = r.MissingRecordReviews()
+
+    if records:
+        for record in records:
+            (artistId, artist, recordId, name, recorded, discs, rating, media) = record
+
+            print(
+                f"{artist} - Id: {recordId} - {recorded} - {name} ({media}) - {discs} - {rating}"
+            )
+    else:
+        print(f"No Records found!")
+
+
+def GetTotalArtistTotals():
+    records = r.GetTotalsForEachArtist()
+
+    if records:
+        for record in records:
+            (artistId, name, totalDisc, totalCost) = record
+
+            print(
+                f"{artistId}: {name.strip()} - {totalDisc} - ${u.roundOff(totalCost)}"
+            )
+    else:
+        print(f"No Records found!")
+
+
+def GetTotalCostForEachArtist():
+    records = r.GetTotalCostForEachArtist()
+
+    if records:
+        for record in records:
+            (artistId, name, totalCost) = record
+
+            print(f"{artistId}: {name.strip()} - ${u.roundOff(totalCost)}")
+    else:
+        print(f"No Records found!")
+
+
+def RecordHtml(recordId):
+    record = r.GetArtistRecordEntity(recordId)
+
+    if record:
+        (
+            artistId,
+            firstName,
+            lastName,
+            artistName,
+            recordId,
+            name,
+            field,
+            recorded,
+            label,
+            pressing,
+            rating,
+            discs,
+            media,
+            bought,
+            cost,
+        ) = record
+
+        dateStamp = u.dateString(bought)
+        dateStamp = f"Bought: {dateStamp}" if dateStamp else ""
+
+        print(
+            f"<p><strong>ArtistId:</strong> {artistId}</p>\n<p><strong>Artist:</strong> \
+{artistName}</p>\n<p><strong>RecordId:</strong> {recordId}</p>\n<p><strong>Recorded:</strong> \
+{recorded}</p>\n<p><strong>Name:</strong> {name}</p>\n<p><strong>Rating:</strong> \
+{rating}</p>\n<p><strong>Media:</strong> {media}</p>\n \
+<p><strong>Bought:</strong> {dateStamp}</p>\n<p><strong>Cost:</strong> ${u.roundOff(cost)}</p>\n"
+        )
+    else:
+        print(f"Records not found for ArtistId: {artistId}!")

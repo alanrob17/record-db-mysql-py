@@ -350,3 +350,179 @@ def GetTotalNumberOfDiscs(sproc):
         print(f"Error: {err}")
 
     return total
+
+
+def GetArtistNumberOfRecords(artistId):
+    Total = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetArtistNumberOfRecords", (artistId,))
+
+            for result in cursor.stored_results():
+                result = result.fetchone()
+                if result:
+                    total = result[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return total
+
+
+def GetArtistRecordEntity(recordId: int) -> tuple:
+    record = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetArtistRecordByRecordId", (recordId,))
+
+            for result in cursor.stored_results():
+                record = result.fetchone()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return record
+
+
+def GetSingleRecord(recordId: int) -> tuple:
+    record = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetSingleRecord", (recordId,))
+
+            for result in cursor.stored_results():
+                record = result.fetchone()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return record
+
+
+def GetArtistNameByRecordId(recordId: int) -> str:
+    name = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetArtistNameByRecordId", (recordId,))
+
+            for result in cursor.stored_results():
+                row = result.fetchone()
+                if row:
+                    name = row[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return name
+
+
+def GetDiscCountForYear(year: int) -> int:
+    Total = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetRecordedYearNumber", (year,))
+
+            for result in cursor.stored_results():
+                result = result.fetchone()
+                if result:
+                    total = result[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return total
+
+
+def GetBoughtDiscCountForYear(year: str) -> int:
+    Total = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc("GetBoughtDiscCountForYear", (year,))
+
+            for result in cursor.stored_results():
+                result = result.fetchone()
+                if result:
+                    total = result[0]
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return total
+
+
+def MissingRecordReviews():
+    records = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                "MissingRecordReview",
+            )
+
+            for result in cursor.stored_results():
+                records = result.fetchall()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return records
+
+
+def GetTotalsForEachArtist():
+    records = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                "GetTotalsForEachArtist",
+            )
+
+            for result in cursor.stored_results():
+                records = result.fetchall()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return records
+
+
+def GetTotalCostForEachArtist():
+    records = None
+
+    try:
+        with mysql.connector.connect(
+            host="localhost", user=db_user, password=db_password, database=db_database
+        ) as db, db.cursor() as cursor:
+            cursor.callproc(
+                "GetTotalCostForEachArtist",
+            )
+
+            for result in cursor.stored_results():
+                records = result.fetchall()
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+
+    return records

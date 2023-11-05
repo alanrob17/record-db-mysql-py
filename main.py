@@ -86,26 +86,33 @@ import record_test as rt
 # total = rt.GetTotalNumberOfDiscs(sproc)
 # print(f"Total number of Blu-rays: {total}.")
 
-# rt.GetArtistRecordEntity(2196)
+# recordId = 2196
+# rt.GetArtistRecordEntity(recordId)
 
-"""
-    internal static void GetArtistRecordEntitySP(int recordId)
-    {
-        var r = _rd.GetArtistRecordEntitySP(recordId);
-        if (r.RecordId > 0)
-        {
-            Console.WriteLine($"{r.ArtistName}\n");
-            Console.WriteLine($"\t{r.Recorded} - {r.Name} ({r.Media}) - Rating: {r.Rating}");
-        }
-    }
-"""
-# rt.GetArtistNumberOfRecords(114);
-# rt.GetRecordDetails(2196);
-# rt.GetArtistNameFromRecord(2196);
-# rt.GetDiscCountForYear(1974);
-# rt.GetBoughtDiscCountForYear("2000");
-# rt.GetNoRecordReview();
-# rt.GetNoReviewCount();
-# rt.GetTotalArtistCost();
-# rt.GetTotalArtistDiscs();
-# rt.RecordHtml(2196);
+# artistId = 114
+# rt.GetArtistNumberOfRecords(artistId)
+
+# recordId = 2196
+# rt.GetRecordDetails(recordId)
+
+# recordId = 2196
+# rt.GetArtistNameFromRecord(recordId)
+
+# year = 1973
+# rt.GetDiscCountForYear(year)
+
+# year = "2000"
+# rt.GetBoughtDiscCountForYear(year)
+
+# sproc = "GetNoRecordReviewCount"
+# total = rt.GetTotalNumberOfDiscs(sproc)
+# print(f"Number of records with no Reviews : {total}.")
+
+# rt.MissingRecordReviews()
+
+# rt.GetTotalArtistTotals()
+
+# rt.GetTotalCostForEachArtist()
+
+recordId = 2196
+rt.RecordHtml(recordId)

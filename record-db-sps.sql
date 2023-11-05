@@ -192,3 +192,143 @@ BEGIN
 END $
 
 DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistNumberOfRecords(
+  IN _artistId INT
+)
+BEGIN
+  SELECT SUM(discs)
+    FROM Record WHERE ArtistId = _artistId;
+END $
+
+DELIMITER ;
+
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistRecordByRecordId(
+	IN _recordId INT
+)
+BEGIN
+SELECT a.ArtistId, a.FirstName,
+   a.LastName, a.[Name] AS ArtistName,
+   r.RecordId, r.[Name],
+   r.Field, r.Recorded,
+   r.Label, r.Pressing,
+   r.Rating, r.Discs, 
+   r.Media, r.Bought, 
+   r.Cost
+FROM Artist a INNER JOIN
+   Record r ON a.ArtistId = r.ArtistId
+WHERE r.RecordId = _recordId
+ORDER BY  a.LastName,  a.FirstName,  r.Recorded
+END $
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE GetBoughtDiscCountForYear(
+	IN _year VARCHAR(20)
+)
+BEGIN
+	SELECT SUM(Discs) 
+		FROM Record 
+		WHERE Bought LIKE CONCAT('%', _year, '%');
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetNoRecordReviewCount()
+BEGIN
+    SELECT SUM(1)
+    FROM Record
+    WHERE Review IS NULL OR LENGTH(Review) < 5;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE MissingRecordReview()
+BEGIN
+SELECT a.ArtistId, a.Name AS Artist, r.RecordId, r.Name, r.Recorded, r.Discs, r.Rating, r.Media
+	FROM Artist a INNER JOIN
+	Record r ON a.ArtistId = r.ArtistId
+	WHERE Review IS NULL OR LENGTH(Review) < 5
+    ORDER BY a.LastName, a.FirstName, r.Recorded DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetTotalsForEachArtist()
+BEGIN
+    SELECT a.ArtistId,
+           CONCAT_WS(' ', IFNULL(a.FirstName, ''), a.LastName) AS Name,
+           SubQuery.TotalDiscs,
+           SubQuery.TotalCost
+    FROM Artist a
+    JOIN (
+        SELECT r.ArtistId,
+               SUM(Discs) AS TotalDiscs,
+               SUM(Cost) AS TotalCost
+        FROM Record r
+        GROUP BY ArtistId
+    ) AS SubQuery
+    ON a.ArtistId = SubQuery.ArtistId
+    ORDER BY SubQuery.TotalCost DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetTotalCostForEachArtist()
+BEGIN
+    SELECT
+        a.ArtistId,
+        CONCAT_WS(' ', IFNULL(a.FirstName, ''), a.LastName) AS Name,
+        SUM(r.Cost) AS TotalCost
+    FROM Artist a
+    INNER JOIN Record r ON a.ArtistId = r.ArtistId
+    WHERE r.Cost > 0.00
+    GROUP BY a.ArtistId
+    ORDER BY TotalCost DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistRecordByRecordId(
+	IN _recordId INT
+)
+BEGIN
+SELECT a.ArtistId, a.FirstName,
+   a.LastName, a.Name AS ArtistName,
+   r.RecordId, r.Name,
+   r.Field, r.Recorded,
+   r.Label, r.Pressing,
+   r.Rating, r.Discs, 
+   r.Media, r.Bought, 
+   r.Cost
+FROM Artist a INNER JOIN
+   Record r ON a.ArtistId = r.ArtistId
+WHERE r.RecordId = _recordId
+ORDER BY  a.LastName,  a.FirstName,  r.Recorded;
+END $
+
+DELIMITER ;
