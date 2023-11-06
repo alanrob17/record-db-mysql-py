@@ -1,9 +1,9 @@
-def get_artist_ids(records):
+def GetArtistIds(records):
     # Create a set to store distinct artist_ids
     artist_ids = set()
 
     for record in records:
-        artist_id, name, recorded, media = record
+        (artist_id, name, recorded, media) = record
         artist_ids.add(artist_id)
 
     # Convert the set to a list if needed
@@ -12,11 +12,11 @@ def get_artist_ids(records):
     return artist_ids_list
 
 
-def organize_records_by_artist(records):
+def OrganizeRecordsByArtist(records):
     artist_records = {}
 
     for record in records:
-        artist_id, name, recorded, media = record
+        (artist_id, name, recorded, media) = record
 
         if artist_id not in artist_records:
             artist_records[artist_id] = []

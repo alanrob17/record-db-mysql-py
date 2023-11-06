@@ -2,141 +2,131 @@ import artist_db as a
 import artist_data as ad
 
 
-def print_artists():
-    artists = a.get_all_artists()
+def PrintArtists():
+    artists = a.GetAllArtists()
 
     for artist in artists:
         (
-            artist_id,
-            first_name,
-            last_name,
-            artist_name,
+            artistId,
+            firstName,
+            lastName,
+            artistName,
             biography,
-        ) = artist  # Unpack the row
-        print(f"Id: {artist_id}: {artist_name}")
+        ) = artist
+        print(f"Id: {artistId}: {artistName}")
 
 
-def print_artist_by_id(artist_id):
-    artist = a.get_artist_by_id(artist_id)
+def PrintArtistById(artistId):
+    artist = a.GetArtistById(artistId)
 
     if artist:
-        (artist_id, first_name, last_name, artist_name, biography) = artist
+        (artistId, firstName, lastName, artistName, biography) = artist
 
-        print(f"ArtistId: {artist_id}")
-        print(f"Artist name: {artist_name}")
-        print(f"First name: {first_name}")
-        print(f"Last name: {last_name}")
+        print(f"ArtistId: {artistId}")
+        print(f"Artist name: {artistName}")
+        print(f"First name: {firstName}")
+        print(f"Last name: {lastName}")
 
-        biography_to_print = (
-            biography if len(biography) < 60 else biography[:60] + "..."
-        )
+        biographyToPrint = biography if len(biography) < 60 else biography[:60] + "..."
 
-        print(f"Biography: {biography_to_print}")
+        print(f"Biography: {biographyToPrint}")
     else:
-        print(f"Artist with id: '{artist_id}' not found.")
+        print(f"Artist with id: '{artistId}' not found.")
 
 
-def print_Biography(artist_id):
-    artist = a.get_artist_by_id(artist_id)
+def PrintBiography(artistId):
+    artist = a.GetArtistById(artistId)
 
     if artist:
-        (artist_id, first_name, last_name, artist_name, biography) = artist
+        (artistId, firstName, lastName, artistName, biography) = artist
 
         print(f"Biography: {biography}")
     else:
-        print(f"Artist with id: '{artist_id}' not found.")
+        print(f"Artist with id: '{artistId}' not found.")
 
 
-def print_artist(name):
-    artist = a.get_artist(name)
+def PrintArtist(name):
+    artist = None
+    artist = a.GetArtist(name)
 
     if artist:
         (
-            artist_id,
-            first_name,
-            last_name,
-            artist_name,
+            artistId,
+            firstName,
+            lastName,
+            artistName,
             biography,
-        ) = artist  # Unpack the row
+        ) = artist
 
-        print(f"ArtistId: {artist_id}")
-        print(f"Artist name: {artist_name}")
-        print(f"First name: {first_name}")
-        print(f"Last name: {last_name}")
+        print(f"ArtistId: {artistId}")
+        print(f"Artist name: {artistName}")
+        print(f"First name: {firstName}")
+        print(f"Last name: {lastName}")
 
-        biography_to_print = (
-            biography if len(biography) < 60 else biography[:60] + "..."
-        )
+        biographyToPrint = biography if len(biography) < 60 else biography[:60] + "..."
 
-        print(f"Biography: {biography_to_print}")
+        print(f"Biography: {biographyToPrint}")
     else:
-        print(f"Artist '{artist_name}' not found in the 'Artist' table.")
+        print(f"Artist '{name}' not found in the 'Artist' table.")
 
 
-def create_artist():
-    firstname = "James"
-    lastname = "Robson"
-    biography = "James is a heavy metal bass player."
-    artist = (firstname, lastname, biography)
+def CreateArtist():
+    firstName = "Ethan"
+    lastName = "Robson"
+    biography = "Ethan is a Soul singer."
+    artist = (firstName, lastName, biography)
 
-    artist_id = a.create_artist2(artist)
+    artistId = a.CreateArtist(artist)
 
-    print(artist_id)
+    print(artistId)
 
 
-def update_artist(artist_id):
-    artist = {
-        "FirstName": "Charley",
-        "LastName": "Robson",
-        "Name": "",
-        "Biography": "Charley is a Hip-Hop and Country & Western singer.",
-    }
+def UpdateArtist(artistId):
+    artist = (
+        "Ethan James",
+        "Robson",
+        "Ethan is a Hip-Hop and Country & Western singer.",
+    )
 
-    result = a.update_artist(artist_id, artist)
+    result = a.UpdateArtist(artistId, artist)
 
     return result
 
 
-def delete_artist(artist_id):
-    result = a.delete_artist(artist_id)
+def DeleteArtist(artistId):
+    result = a.DeleteArtist(artistId)
 
     print(result)
 
 
-def get_biography(artist_id):
-    biography = a.get_biography(artist_id)
-
-    print(biography)
-
-
-def artist_html(artist_id):
-    artist = a.get_artist_by_id(artist_id)
+def ArtistHtml(artistId):
+    artist = a.GetArtistById(artistId)
 
     if artist is None:
         return "Artist not found"
     else:
-        (artist_id, first_name, last_name, name, biography) = artist
-        html_code = f"<p><strong>Id:</strong> {artist_id}</p>\n<p><strong>Name:</strong> {first_name} {last_name}</p>\n<p><strong>Biography:</strong></p>\n<div>{biography}</p></div>"
+        (artistId, firstName, lastName, name, biography) = artist
+        htmlCode = f"<p><strong>Id:</strong> {artistId}</p>\n<p><strong>Name:</strong> {firstName} {lastName}</p>\n<p><strong>Biography:</strong></p>\n<div>{biography}</p></div>"
 
-    return html_code
+    return htmlCode
 
 
-def GetArtistId(first_name, last_name):
-    artist_id = a.get_artist_id_by_name2(first_name, last_name)
+def GetArtistId(firstName, lastName):
+    artistId = a.GetArtistIdByName(firstName, lastName)
 
-    if artist_id is not None:
-        print(f"Artist ID for {first_name} {last_name}: {artist_id}")
+    if artistId is not None:
+        print(f"Artist ID for {firstName} {lastName}: {artistId}")
     else:
-        print(f"No artist found for {first_name} {last_name}")
+        print(f"No artistId found for {firstName} {lastName}")
 
 
-def get_artists_with_no_bio():
-    artists = a.get_artists_with_no_bio()
+def GetArtistsWithNoBio():
+    artists = a.GetArtistsWithNoBio()
     for artist in artists:
-        (artist_id, name) = artist
-        print(f"ArtistId: {artist_id} - {name}")
+        (artistId, name) = artist
+        print(f"ArtistId: {artistId} - {name}")
 
 
-def get_no_biography_count():
-    count = a.get_no_biography_count()
+def GetNoBiographyCount():
+    count = a.GetNoBiographyCount()
     print(f"There are {count} artists with no biography.")

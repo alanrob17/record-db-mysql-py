@@ -332,3 +332,162 @@ ORDER BY  a.LastName,  a.FirstName,  r.Recorded;
 END $
 
 DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistRecordsByRecordId()
+BEGIN
+SELECT a.ArtistId, a.Name AS Artist, r.Name AS Record, r.Recorded, r.Media
+            FROM Artist a INNER JOIN Record r
+            ON a.ArtistId = r.ArtistId
+            ORDER BY a.LastName, a.FirstName, r.Recorded DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetFullRecords()
+BEGIN
+SELECT RecordId, ArtistId, Name, Field, Recorded, Label, Pressing,
+            Rating, Discs, Media, Bought, Cost, Review
+            FROM Record ORDER BY ArtistId, Recorded DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetRecords()
+BEGIN
+SELECT ArtistId, Name, Recorded, Media 
+	FROM Record 
+	ORDER BY ArtistId, Recorded DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetRecordsById(
+	IN _artistId INT
+)
+BEGIN
+SELECT Name, Recorded, Media 
+	FROM Record WHERE ArtistId = _artistId 
+    ORDER BY Recorded DESC;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistIdsByYear(
+	IN _year INT
+)
+BEGIN
+SELECT DISTINCT ArtistId 
+	FROM Record 
+    WHERE Recorded = _year 
+    ORDER BY ArtistId;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistByName(
+	IN _name VARCHAR(255)
+)
+BEGIN
+SELECT ArtistId, FirstName, LastName, Name, Biography 
+	FROM Artist 
+    WHERE Name = _name;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistById(
+	IN _artistId INT
+)
+BEGIN
+SELECT ArtistId, FirstName, LastName, Name, Biography 
+	FROM Artist 
+    WHERE ArtistId = _artistId;
+END $
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE GetArtistsWithNoBio()
+BEGIN
+SELECT ArtistId, Name 
+	FROM Artist 
+    WHERE Biography is null OR Biography = '' 
+    ORDER BY LastName, FirstName;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE GetNoBiographyCount()
+BEGIN
+SELECT COUNT(*) 
+	FROM Artist 
+    WHERE Biography is null OR Biography = '' 
+    ORDER BY LastName, FirstName;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE UpdateArtistById(
+	IN _artistId INT,
+    IN _firstName VARCHAR(255),
+	IN _lastName VARCHAR(255),
+    IN _biography TEXT
+)
+BEGIN
+
+DECLARE _artistName VARCHAR(255);
+
+    IF _firstName IS NULL OR _firstName = '' THEN
+        SET _artistName = _lastName;
+    ELSE
+        SET _artistName = CONCAT(_firstName, ' ', _lastName);
+    END IF;
+    
+UPDATE Artist
+    SET FirstName = _firstName, LastName = _lastName, Name = _artistName, Biography = _biography
+    WHERE ArtistId = _artistId;
+END $
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE DeleteArtistById(
+	IN _artistId INT
+)
+BEGIN
+
+DELETE FROM Artist 
+	WHERE ArtistId = _artistId;
+END $
+
+DELIMITER ;

@@ -4,53 +4,50 @@ import record_test as rt
 ## ---- Artist calls ----
 
 # name = "Bob Dylan"
-# at.print_artist(name)
+# at.PrintArtist(name)
 
-# at.print_artists()
+# at.PrintArtists()
 
-# artist_id = 114
-# at.print_artist_by_id(artist_id)
+# artistId = 114
+# at.PrintArtistById(artistId)
 
-# artist_id = 114
-# at.print_Biography(artist_id)
+# artistId = 114
+# at.PrintBiography(artistId)
 
-# at.create_artist()
+# at.CreateArtist()
 
-# artist_id = 833
-# result = at.update_artist(artist_id)
+# artistId = 836
+# result = at.UpdateArtist(artistId)
 # print(result)
 
 
-# artist_id = 833
-# at.delete_artist(artist_id)
+# artistId = 836
+# at.DeleteArtist(artistId)
 
-# artist_id = 114
-# at.get_biography(artist_id)
-
-# artist_id = 114
-# html = at.artist_html(artist_id)
+# artistId = 114
+# html = at.ArtistHtml(artistId)
 # print(html)
 
 # firstName = "Bob"
 # lastName = "Dylan"
 # at.GetArtistId(firstName, lastName)
 
-# at.get_artists_with_no_bio()
+# at.GetArtistsWithNoBio()
 
-# at.get_no_biography_count()
+# at.GetNoBiographyCount()
 
 ## ---- Record calls ----
 
-# rt.print_artists_and_records()
+rt.PrintArtistsAndRecords()
 
-# rt.print_full_records()
+# rt.PrintFullRecords()
 
-# rt.print_records()
+# rt.PrintRecords()
 
-# rt.print_sorted_artist_records()
+# rt.PrintSortedArtistRecords()
 
 # year = 1975
-# rt.print_records_by_year(year)
+# rt.PrintRecordsByYear(year)
 
 # artistId = 827
 # rt.CreateRecord(artistId)
@@ -114,5 +111,5 @@ import record_test as rt
 
 # rt.GetTotalCostForEachArtist()
 
-recordId = 2196
-rt.RecordHtml(recordId)
+# recordId = 2196
+# rt.RecordHtml(recordId)

@@ -6,31 +6,31 @@ import record_data as rd
 import utilities as u
 
 
-def print_records_by_year(year):
-    records = r.get_records_by_year(year)
+def PrintRecordsByYear(year):
+    records = r.GetRecordsByYear(year)
 
     if len(records) == 0:
         print(f"No records found for {year}.")
         exit()
 
-    artists = a.get_all_artists()
+    artists = a.GetAllArtists()
 
-    artist_ids_list = ad.get_artist_ids(records)
+    artistIdsList = ad.GetArtistIds(records)
 
-    artists = [artist for artist in artists if artist[0] in artist_ids_list]
+    artists = [artist for artist in artists if artist[0] in artistIdsList]
 
     def print_records(artists, records):
         print(f"\nAlbums recorded in {year}:")
 
         for artist in artists:
-            artist_id, first_name, last_name, name, biography = artist
+            (artistId, firstName, lastName, name, biography) = artist
 
             print(f"\n{name}\n")
 
-            filtered_records = rd.filter_records_by_artist(records, artist_id)
+            filteredRecords = rd.FilterRecordsByArtist(records, artistId)
 
-            for record in filtered_records:
-                artist_id, name, recorded, media = record
+            for record in filteredRecords:
+                artistId, name, recorded, media = record
 
                 print(f"\t{name} ({media})")
 
@@ -39,27 +39,27 @@ def print_records_by_year(year):
     print_records(artists, records)
 
 
-def print_sorted_artist_records():
-    artists = a.get_all_artists()
+def PrintSortedArtistRecords():
+    artists = a.GetAllArtists()
 
-    records = r.get_records()
+    records = r.GetRecords()
 
-    artist_records = ad.organize_records_by_artist(records)
+    artistRecords = ad.OrganizeRecordsByArtist(records)
 
     for artist in artists:
-        artist_id, first_name, last_name, artist_name, biography = artist
+        (artistId, firstName, lastName, artistName, biography) = artist
 
-        if artist_id in artist_records:
-            print(f"\n{artist_name}\n")
+        if artistId in artistRecords:
+            print(f"\n{artistName}\n")
 
-            for recorded, name, media in artist_records[artist_id]:
+            for recorded, name, media in artistRecords[artistId]:
                 print(f"\t{recorded} - {name} ({media})")
 
     print()
 
 
-def print_records():
-    records = r.get_records()
+def PrintRecords():
+    records = r.GetRecords()
 
     for record in records:
         artist_id, name, recorded, media = record
@@ -67,8 +67,8 @@ def print_records():
         print(f"{artist_id}: {recorded} - {name} ({media})")
 
 
-def print_full_records():
-    records = r.get_full_records()
+def PrintFullRecords():
+    records = r.GetFullRecords()
 
     for record in records:
         (
@@ -95,13 +95,13 @@ def print_full_records():
         )
 
 
-def print_artists_and_records():
-    artists_records = r.get_artists_and_records()
+def PrintArtistsAndRecords():
+    artists_records = r.GetArtistsAndRecords()
 
     for record in artists_records:
-        (artist_id, artist, record_name, recorded, media) = record
+        (artistId, artist, recordName, recorded, media) = record
 
-        print(f"{artist_id}: {artist} - {recorded} - {record_name} ({media})")
+        print(f"{artistId}: {artist} - {recorded} - {recordName} ({media})")
 
 
 def CreateRecord(artistId):
