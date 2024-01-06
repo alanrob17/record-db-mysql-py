@@ -3,8 +3,8 @@ import record_test as rt
 
 ## ---- Artist calls ----
 
-# name = "Bob Dylan"
-# at.PrintArtist(name)
+name = "Bob Dylan"
+at.PrintArtist(name)
 
 # at.PrintArtists()
 
@@ -38,7 +38,7 @@ import record_test as rt
 
 ## ---- Record calls ----
 
-rt.PrintArtistsAndRecords()
+# rt.PrintArtistsAndRecords()
 
 # rt.PrintFullRecords()
 

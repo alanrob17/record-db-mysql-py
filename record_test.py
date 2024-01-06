@@ -273,7 +273,7 @@ def GetArtistRecordEntity(recordId):
 
 def GetArtistNumberOfRecords(artistId):
     total = None
-    artist = a.get_artist_by_id(artistId)
+    artist = a.GetArtistById(artistId)
 
     if artist:
         (artistId, firstName, lastName, name, biography) = artist

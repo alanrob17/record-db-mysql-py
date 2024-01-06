@@ -2,7 +2,7 @@ import mysql.connector
 import configuration as c
 
 
-db_user, db_password, db_database = c.connect()
+db_user, db_password, db_database, db_host, db_port = c.connect()
 
 
 def GetAllArtists():
@@ -10,7 +10,11 @@ def GetAllArtists():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetAllArtists",
@@ -30,7 +34,11 @@ def GetArtist(artistName):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistByName", (artistName,))
 
@@ -50,7 +58,11 @@ def GetArtistById(artistId):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistById", (artistId,))
 
@@ -70,7 +82,11 @@ def CreateArtist(artist):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             (firstName, lastName, biography) = artist
 
@@ -94,7 +110,11 @@ def UpdateArtist(artistId, updatedArtist):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "UpdateArtistById",
@@ -114,7 +134,11 @@ def UpdateArtist(artistId, updatedArtist):
 def DeleteArtist(artistId):
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistById", (artistId,))
 
@@ -144,7 +168,11 @@ def GetArtistIdByName(firstName, lastName):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistIdByNames", (firstName, lastName))
 
@@ -164,7 +192,11 @@ def GetArtistsWithNoBio():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetArtistsWithNoBio",
@@ -184,7 +216,11 @@ def GetNoBiographyCount():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetNoBiographyCount",

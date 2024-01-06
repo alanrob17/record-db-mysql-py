@@ -1,7 +1,7 @@
 import mysql.connector
 import configuration as c
 
-db_user, db_password, db_database = c.connect()
+db_user, db_password, db_database, db_host, db_port = c.connect()
 
 
 def GetRecordsById(artistId):
@@ -9,7 +9,11 @@ def GetRecordsById(artistId):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordsById", (artistId))
 
@@ -27,7 +31,11 @@ def GetArtistsAndRecords():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetArtistRecordsByRecordId",
@@ -47,7 +55,11 @@ def GetFullRecords():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetFullRecords",
@@ -67,7 +79,11 @@ def GetRecords():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetRecords",
@@ -87,7 +103,11 @@ def GetRecordsByYear(year):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordsByYear", (year,))
 
@@ -105,7 +125,11 @@ def GetArtistIdsByYear(year):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistIdsByYear", (year,))
 
@@ -123,7 +147,11 @@ def CreateRecord(record):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             (
                 artistId,
@@ -175,7 +203,11 @@ def GetRecordById(recordId):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordById", (recordId,))
 
@@ -208,7 +240,11 @@ def UpdateRecord(recordId, updatedRecord):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "UpdateRecordById",
@@ -242,7 +278,11 @@ def UpdateRecord(recordId, updatedRecord):
 def DeleteRecord(recordId):
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordById", (recordId,))
 
@@ -272,7 +312,11 @@ def GetRecordByName(searchName):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordByName", (searchName,))
 
@@ -290,7 +334,11 @@ def GetRecordsByArtistId(artistId):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordsByArtistId", (artistId,))
 
@@ -308,7 +356,11 @@ def GetTotalNumberOfCDs(sproc):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 sproc,
@@ -330,7 +382,11 @@ def GetTotalNumberOfDiscs(sproc):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 sproc,
@@ -352,7 +408,11 @@ def GetArtistNumberOfRecords(artistId):
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistNumberOfRecords", (artistId,))
 
@@ -372,7 +432,11 @@ def GetArtistRecordEntity(recordId: int) -> tuple:
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistRecordByRecordId", (recordId,))
 
@@ -390,7 +454,11 @@ def GetSingleRecord(recordId: int) -> tuple:
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetSingleRecord", (recordId,))
 
@@ -408,7 +476,11 @@ def GetArtistNameByRecordId(recordId: int) -> str:
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetArtistNameByRecordId", (recordId,))
 
@@ -428,7 +500,11 @@ def GetDiscCountForYear(year: int) -> int:
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetRecordedYearNumber", (year,))
 
@@ -448,7 +524,11 @@ def GetBoughtDiscCountForYear(year: str) -> int:
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc("GetBoughtDiscCountForYear", (year,))
 
@@ -468,7 +548,11 @@ def MissingRecordReviews():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "MissingRecordReview",
@@ -488,7 +572,11 @@ def GetTotalsForEachArtist():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetTotalsForEachArtist",
@@ -508,7 +596,11 @@ def GetTotalCostForEachArtist():
 
     try:
         with mysql.connector.connect(
-            host="localhost", user=db_user, password=db_password, database=db_database
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_database,
         ) as db, db.cursor() as cursor:
             cursor.callproc(
                 "GetTotalCostForEachArtist",
